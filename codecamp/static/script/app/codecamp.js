@@ -8,7 +8,18 @@ CodeCamp.ApplicationView = Ember.View.extend({
 
 CodeCamp.Session = DS.Model.extend({
   id: DS.attr('number'),
-  name: DS.attr('string')
+  name: DS.attr('string'),
+  speakers: DS.hasMany('CodeCamp.Speaker')
+});
+
+CodeCamp.Speaker = DS.Model.extend({
+  id: DS.attr('number'),
+  name: DS.attr('string'),
+  session: DS.belongsTo('CodeCamp.Session')
+});
+
+CodeCamp.Speaker.reopenClass({
+  url: 'sessions/%@/speakers/'
 });
 
 CodeCamp.Store = DS.Store.extend({

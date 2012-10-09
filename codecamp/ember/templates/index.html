@@ -13,6 +13,9 @@
 <script type="text/x-handlebars" data-template-name="sessions">
 {{#each session in controller}}
   {{session.name}}<br />
+  {{#each speaker in session.speakers}}
+    {{speaker.name}}<br />
+  {{/each}}
 {{/each}}
 </script>
 
