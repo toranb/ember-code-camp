@@ -37,13 +37,37 @@ CodeCamp.SessionsController = Ember.ArrayController.extend({
   content: []
 });
 
+CodeCamp.SessionView = Ember.View.extend({
+  templateName: 'session'
+});
+
+CodeCamp.SessionController = Ember.ObjectController.extend({
+  content: null
+});
+
 CodeCamp.Router = Ember.Router.extend({
   root: Ember.Route.extend({
     index: Ember.Route.extend({
       route: '/',
+      showSessionDetails: Ember.Route.transitionTo('sessionDetails'),
       connectOutlets: function(router, context) {
         router.get('applicationController').connectOutlet('sessions', router.get('store').findAll(CodeCamp.Session));
-      }
+      },
+      index: Ember.Route.extend({
+        route: '/'
+      }),
+      sessionDetails: Ember.Route.extend({
+        route: '/session/:session_id',
+        connectOutlets: function(router, session) {
+          router.get('applicationController').connectOutlet('session', session);
+        },
+        serialize: function(router, session) {
+          return { 'session_id': session.get('id') }
+        },
+        deserialize: function(router, params) {
+          return CodeCamp.Session.find(params['session_id']);
+        }
+      })
     })
   })
 });

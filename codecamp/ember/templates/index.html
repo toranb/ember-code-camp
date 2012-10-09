@@ -15,8 +15,13 @@
   {{session.name}}<br />
   {{#each speaker in session.speakers}}
     {{speaker.name}}<br />
+    <a {{action showSessionDetails session href=true}}>View Session Details</a><br />
   {{/each}}
 {{/each}}
+</script>
+
+<script type="text/x-handlebars" data-template-name="session">
+  {{content.name}}
 </script>
 
 {% endverbatim %}
