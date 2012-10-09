@@ -23,10 +23,18 @@ CodeCamp.Router = Ember.Router.extend({
     index: Ember.Route.extend({
       route: '/',
       connectOutlets: function(router, context) {
-        router.get('applicationController').connectOutlet('sessions');
+        router.get('applicationController').connectOutlet('sessions', CodeCamp.SessionsRepository.findAll());
       }
     })
   })
+});
+
+CodeCamp.SessionsRepository = Ember.Object.create({
+  findAll: function() {
+    var first = CodeCamp.Session.create({ name: 'first' });
+    var last = CodeCamp.Session.create({ name: 'last' });
+    return [first, last];
+  }
 });
 
 CodeCamp.initialize();

@@ -11,7 +11,9 @@
 </script>
 
 <script type="text/x-handlebars" data-template-name="sessions">
-hello sessions
+{{#each session in controller}}
+  {{session.name}}<br />
+{{/each}}
 </script>
 
 {% endverbatim %}
