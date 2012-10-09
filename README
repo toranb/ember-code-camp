@@ -1,0 +1,28 @@
+ember.js web app showing one to many data models in action using ember-data
+
+To run this django application
+
+1. pip install -r requirements.txt
+2. python manage.py syncdb
+3. python manage.py runserver
+4. http://localhost:8000/admin/
+5. add a few sessions and speakers
+6. open the source for the CreateModelMixin class and add this
+    foo = self.get_instance_data(model, content, *args, **kwargs)
+    del foo['session_id']
+    instance = model(**foo)
+**instead of this
+    instance = model(**self.get_instance_data(model, content, *args, **kwargs))
+
+To run the javascript unit tests you will need to install phantomJS
+
+Ubuntu `apt-get install phantomjs`
+OSX `brew install phantomjs`
+
+Next run npm install to pull down the jasmine-phantom-node module
+
+npm install
+
+Now you can run the tests from the root like so
+
+node node_modules/jasmine-phantom-node/bin/jasmine-phantom-node ember/static/script/tests

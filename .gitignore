@@ -1,0 +1,9 @@
+*.pyc
+*.pyo
+
+.idea/*
+.ropeproject/*
+
+codecamp.db
+
+node_modules/*
