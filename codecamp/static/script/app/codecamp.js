@@ -45,11 +45,20 @@ CodeCamp.SessionController = Ember.ObjectController.extend({
   content: null
 });
 
+CodeCamp.SpeakerView = Ember.View.extend({
+  templateName: 'speaker'
+});
+
+CodeCamp.SpeakerController = Ember.ObjectController.extend({
+  content: null
+});
+
 CodeCamp.Router = Ember.Router.extend({
   root: Ember.Route.extend({
     index: Ember.Route.extend({
       route: '/',
       showSessionDetails: Ember.Route.transitionTo('sessionDetails'),
+      showSpeakerDetails: Ember.Route.transitionTo('speakerDetails'),
       connectOutlets: function(router, context) {
         router.get('applicationController').connectOutlet('sessions', router.get('store').findAll(CodeCamp.Session));
       },
@@ -66,6 +75,18 @@ CodeCamp.Router = Ember.Router.extend({
         },
         deserialize: function(router, params) {
           return CodeCamp.Session.find(params['session_id']);
+        }
+      }),
+      speakerDetails: Ember.Route.extend({
+        route: '/speaker/:speaker_id',
+        connectOutlets: function(router, speaker) {
+          router.get('applicationController').connectOutlet('speaker', speaker);
+        },
+        serialize: function(router, speaker) {
+          return { 'speaker_id': speaker.get('id') }
+        },
+        deserialize: function(router, params) {
+          return CodeCamp.Speaker.find(params['speaker_id']);
         }
       })
     })

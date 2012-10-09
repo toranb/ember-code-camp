@@ -21,6 +21,13 @@
 </script>
 
 <script type="text/x-handlebars" data-template-name="session">
+{{content.name}}<br />
+  {{#each speaker in content.speakers}}
+    <a {{action showSpeakerDetails speaker href=true}}>View Speaker Details</a><br />
+  {{/each}}
+</script>
+
+<script type="text/x-handlebars" data-template-name="speaker">
   {{content.name}}
 </script>
 
