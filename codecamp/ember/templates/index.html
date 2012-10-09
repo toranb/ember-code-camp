@@ -25,6 +25,14 @@
   {{#each speaker in content.speakers}}
     <a {{action showSpeakerDetails speaker href=true}}>View Speaker Details</a><br />
   {{/each}}
+  {{#each rating in content.ratings}}
+    {{rating.score}}<br />
+    {{rating.feedback}}<br/>
+  {{/each}}
+  <br />
+  {{view Ember.TextField placeholder="score" valueBinding="view.score"}}
+  {{view Ember.TextField placeholder="feedback" valueBinding="view.feedback"}}
+  <a {{action addRating content target="parentView" href=true}}>add rating</a>
 </script>
 
 <script type="text/x-handlebars" data-template-name="speaker">

@@ -9,7 +9,8 @@ CodeCamp.ApplicationView = Ember.View.extend({
 CodeCamp.Session = DS.Model.extend({
   id: DS.attr('number'),
   name: DS.attr('string'),
-  speakers: DS.hasMany('CodeCamp.Speaker')
+  speakers: DS.hasMany('CodeCamp.Speaker'),
+  ratings: DS.hasMany('CodeCamp.Rating')
 });
 
 CodeCamp.Speaker = DS.Model.extend({
@@ -20,6 +21,17 @@ CodeCamp.Speaker = DS.Model.extend({
 
 CodeCamp.Speaker.reopenClass({
   url: 'sessions/%@/speakers/'
+});
+
+CodeCamp.Rating = DS.Model.extend({
+  id: DS.attr('number'),
+  score: DS.attr('number'),
+  feedback: DS.attr('string'),
+  session: DS.belongsTo('CodeCamp.Session')
+});
+
+CodeCamp.Rating.reopenClass({
+  url: 'sessions/%@/ratings/'
 });
 
 CodeCamp.Store = DS.Store.extend({
@@ -38,11 +50,26 @@ CodeCamp.SessionsController = Ember.ArrayController.extend({
 });
 
 CodeCamp.SessionView = Ember.View.extend({
-  templateName: 'session'
+  templateName: 'session',
+  addRating: function(event) {
+    var session = event.context;
+    var score = this.get('score');
+    var feedback = this.get('feedback');
+
+    var rating = CodeCamp.Rating.createRecord({ score: score, feedback: feedback, session: session });
+    this.get('controller').addRating(rating);
+    this.get('controller.target').get('store').commit();
+
+    this.set('score', '');
+    this.set('feedback', '');
+  }
 });
 
 CodeCamp.SessionController = Ember.ObjectController.extend({
-  content: null
+  content: null,
+  addRating: function(rating) {
+    this.content.get('ratings').pushObject(rating);
+  }
 });
 
 CodeCamp.SpeakerView = Ember.View.extend({
