@@ -6,8 +6,16 @@ CodeCamp.ApplicationView = Ember.View.extend({
   templateName: 'application'
 });
 
-CodeCamp.Session = Ember.Object.extend({
-  name: ''
+CodeCamp.Session = DS.Model.extend({
+  id: DS.attr('number'),
+  name: DS.attr('string')
+});
+
+CodeCamp.Store = DS.Store.extend({
+  revision: 4,
+  adapter: DS.DjangoRESTAdapter.create({
+    bulkCommit: false
+  })
 });
 
 CodeCamp.SessionsView = Ember.View.extend({
@@ -23,25 +31,10 @@ CodeCamp.Router = Ember.Router.extend({
     index: Ember.Route.extend({
       route: '/',
       connectOutlets: function(router, context) {
-        router.get('applicationController').connectOutlet('sessions', CodeCamp.SessionsRepository.findAll());
+        router.get('applicationController').connectOutlet('sessions', router.get('store').findAll(CodeCamp.Session));
       }
     })
   })
-});
-
-CodeCamp.SessionsRepository = Ember.Object.create({
-  sessions: [],
-  url: 'http://localhost:8000/sessions',
-  findAll: function() {
-    var self = this;
-    $.getJSON(self.url, function(response) {
-      response.forEach(function(data) {
-        var session = CodeCamp.Session.create({ name: data['name'] });
-        self.sessions.pushObject(session);
-      }, this);
-    });
-    return self.sessions;
-  }
 });
 
 CodeCamp.initialize();
