@@ -57,7 +57,7 @@ CodeCamp.SessionView = Ember.View.extend({
     var feedback = this.get('feedback');
 
     var rating = CodeCamp.Rating.createRecord({ score: score, feedback: feedback, session: session });
-    this.get('controller').addRating(rating);
+    session.get('ratings').pushObject(rating);
     this.get('controller.target').get('store').commit();
 
     this.set('score', '');
@@ -66,10 +66,7 @@ CodeCamp.SessionView = Ember.View.extend({
 });
 
 CodeCamp.SessionController = Ember.ObjectController.extend({
-  content: null,
-  addRating: function(rating) {
-    this.content.get('ratings').pushObject(rating);
-  }
+  content: null
 });
 
 CodeCamp.SpeakerView = Ember.View.extend({
