@@ -30,10 +30,17 @@ CodeCamp.Router = Ember.Router.extend({
 });
 
 CodeCamp.SessionsRepository = Ember.Object.create({
+  sessions: [],
+  url: 'http://localhost:8000/sessions',
   findAll: function() {
-    var first = CodeCamp.Session.create({ name: 'first' });
-    var last = CodeCamp.Session.create({ name: 'last' });
-    return [first, last];
+    var self = this;
+    $.getJSON(self.url, function(response) {
+      response.forEach(function(data) {
+        var session = CodeCamp.Session.create({ name: data['name'] });
+        self.sessions.pushObject(session);
+      }, this);
+    });
+    return self.sessions;
   }
 });
 
