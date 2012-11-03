@@ -1450,7 +1450,7 @@ DS.Store = Ember.Object.extend({
     method) or when the data underlying an existing association
     changes (via the `fetchUnloadedClientIds` method).
   */
-  fetchMany: function(type, clientIds) {
+  fetchMany: function(type, clientIds, parent) {
     var clientIdToId = this.clientIdToId;
 
     var neededIds = map(clientIds, function(clientId) {
@@ -1460,7 +1460,7 @@ DS.Store = Ember.Object.extend({
     if (!neededIds.length) { return; }
 
     var adapter = get(this, '_adapter');
-    if (adapter && adapter.findMany) { adapter.findMany(this, type, neededIds); }
+    if (adapter && adapter.findMany) { adapter.findMany(this, type, neededIds, parent); }
     else { throw "Adapter is either null or does not implement `findMany` method"; }
   },
 
@@ -1529,7 +1529,7 @@ DS.Store = Ember.Object.extend({
         }
       }
 
-      this.fetchMany(type, neededClientIds);
+      this.fetchMany(type, neededClientIds, record);
     }
 
     return manyArray;

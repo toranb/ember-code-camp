@@ -22,13 +22,11 @@
             });
         },
 
-        //findMany: function(store, type, ids, parent) {
-        findMany: function(store, type, json) {
-            debugger;
+        findMany: function(store, type, ids, parent) {
             var json = {}
             , root = this.rootForType(type)
             , plural = this.pluralize(root)
-            , url = type.url.fmt(1);
+            , url = type.url.fmt(parent.get('id'));
 
             this.django_ajax(url, "GET", {
                 success: function(pre_json) {
