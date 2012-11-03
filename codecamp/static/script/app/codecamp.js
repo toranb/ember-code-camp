@@ -7,14 +7,12 @@ CodeCamp.ApplicationView = Ember.View.extend({
 });
 
 CodeCamp.Session = DS.Model.extend({
-  id: DS.attr('number'),
   name: DS.attr('string'),
   speakers: DS.hasMany('CodeCamp.Speaker'),
   ratings: DS.hasMany('CodeCamp.Rating')
 });
 
 CodeCamp.Speaker = DS.Model.extend({
-  id: DS.attr('number'),
   name: DS.attr('string'),
   session: DS.belongsTo('CodeCamp.Session')
 });
@@ -24,7 +22,6 @@ CodeCamp.Speaker.reopenClass({
 });
 
 CodeCamp.Rating = DS.Model.extend({
-  id: DS.attr('number'),
   score: DS.attr('number'),
   feedback: DS.attr('string'),
   session: DS.belongsTo('CodeCamp.Session')
@@ -35,7 +32,7 @@ CodeCamp.Rating.reopenClass({
 });
 
 CodeCamp.Store = DS.Store.extend({
-  revision: 4,
+  revision: 7,
   adapter: DS.DjangoRESTAdapter.create({
     bulkCommit: false
   })
