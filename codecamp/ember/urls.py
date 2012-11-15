@@ -1,9 +1,11 @@
-from codecamp.ember.views import SessionsView, SpeakersView, RatingsView
+from codecamp.ember.views import SessionList, SpeakerList, SpeakerDetail, RatingList, RatingDetail
 from django.views.decorators.csrf import csrf_exempt
 from django.conf.urls.defaults import patterns, url, include
 
 urlpatterns = patterns('',
-    url(r'^/(?P<session>\d+)/ratings/$', csrf_exempt(RatingsView.as_view())),
-    url(r'^/(?P<session>\d+)/speakers/$', csrf_exempt(SpeakersView.as_view())),
-    url(r'^$', csrf_exempt(SessionsView.as_view())),
+    url(r'^/ratings/(?P<pk>\d+)/$', csrf_exempt(RatingDetail.as_view())),
+    url(r'^/speakers/(?P<pk>\d+)/$', csrf_exempt(SpeakerDetail.as_view())),
+    url(r'^/(?P<pk>\d+)/ratings/$', csrf_exempt(RatingList.as_view())),
+    url(r'^/(?P<pk>\d+)/speakers/$', csrf_exempt(SpeakerList.as_view())),
+    url(r'^$', csrf_exempt(SessionList.as_view())),
 )

@@ -54,7 +54,6 @@ CodeCamp.SessionView = Ember.View.extend({
     var feedback = this.get('feedback');
 
     var rating = CodeCamp.Rating.createRecord({ score: score, feedback: feedback, session: session });
-    session.get('ratings').pushObject(rating);
     this.get('controller.target').get('store').commit();
 
     this.set('score', '');

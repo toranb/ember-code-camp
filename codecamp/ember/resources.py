@@ -1,20 +1,20 @@
-from djangorestframework.resources import ModelResource
+from rest_framework import serializers
 from codecamp.ember.models import Session, Speaker, Rating
 
-class SessionResource(ModelResource):
-    model = Session
-    fields = ('id', 'name', 'room', 'desc', 'speakers', 'ratings')
+class SessionSerializer(serializers.ModelSerializer):
+    speakers = serializers.ManyPrimaryKeyRelatedField()
+    ratings = serializers.ManyPrimaryKeyRelatedField()
 
-    def speakers(self, instance):
-        return [speaker.pk for speaker in instance.speakers.all()]
+    class Meta:
+        model = Session
+        fields = ('id', 'name', 'room', 'desc', 'speakers', 'ratings')
 
-    def ratings(self, instance):
-        return [rating.pk for rating in instance.ratings.all()]
+class SpeakerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Speaker
+        fields = ('id', 'name', 'session')
 
-class SpeakerResource(ModelResource):
-    model = Speaker
-    fields = ('id', 'name')
-
-class RatingResource(ModelResource):
-    model = Rating
-    fields = ('id', 'score', 'feedback')
+class RatingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Rating
+        fields = ('id', 'score', 'feedback', 'session')

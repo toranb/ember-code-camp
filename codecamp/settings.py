@@ -72,7 +72,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.admin',
-    'djangorestframework',
+    'rest_framework',
     'codecamp.ember',
     'templatetag_handlebars',
 )
