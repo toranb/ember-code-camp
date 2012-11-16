@@ -12,13 +12,17 @@ CodeCamp.Session = DS.Model.extend({
   ratings: DS.hasMany('CodeCamp.Rating')
 });
 
+CodeCamp.Session.reopenClass({
+  url: 'codecamp/session'
+});
+
 CodeCamp.Speaker = DS.Model.extend({
   name: DS.attr('string'),
   session: DS.belongsTo('CodeCamp.Session')
 });
 
 CodeCamp.Speaker.reopenClass({
-  url: 'sessions/%@/speakers/'
+  url: 'codecamp/sessions/%@/speakers/'
 });
 
 CodeCamp.Rating = DS.Model.extend({
@@ -28,7 +32,7 @@ CodeCamp.Rating = DS.Model.extend({
 });
 
 CodeCamp.Rating.reopenClass({
-  url: 'sessions/%@/ratings/'
+  url: 'codecamp/sessions/%@/ratings/'
 });
 
 CodeCamp.Store = DS.Store.extend({

@@ -5,7 +5,7 @@ from django.conf.urls.defaults import patterns, url, include
 urlpatterns = patterns('',
     url(r'^/ratings/(?P<pk>\d+)/$', csrf_exempt(RatingDetail.as_view())),
     url(r'^/speakers/(?P<pk>\d+)/$', csrf_exempt(SpeakerDetail.as_view())),
-    url(r'^/(?P<pk>\d+)/ratings/$', csrf_exempt(RatingList.as_view())),
-    url(r'^/(?P<pk>\d+)/speakers/$', csrf_exempt(SpeakerList.as_view())),
-    url(r'^$', csrf_exempt(SessionList.as_view())),
+    url(r'^/sessions/(?P<session_pk>\d+)/ratings/$', csrf_exempt(RatingList.as_view())),
+    url(r'^/sessions/(?P<session_pk>\d+)/speakers/$', csrf_exempt(SpeakerList.as_view())),
+    url(r'^/sessions$', csrf_exempt(SessionList.as_view())),
 )

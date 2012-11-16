@@ -14,6 +14,12 @@ class SpeakerList(generics.ListCreateAPIView):
     model = Speaker
     serializer_class = resources.SpeakerSerializer
 
+    def get_queryset(self):
+        session_pk = self.kwargs.get('session_pk', None)
+        if session_pk is not None:
+            return Speaker.objects.filter(session__pk=session_pk)
+        return []
+
 class SpeakerDetail(generics.RetrieveUpdateDestroyAPIView):
     model = Speaker
     serializer_class = resources.SpeakerSerializer
@@ -21,6 +27,12 @@ class SpeakerDetail(generics.RetrieveUpdateDestroyAPIView):
 class RatingList(generics.ListCreateAPIView):
     model = Rating
     serializer_class = resources.RatingSerializer
+
+    def get_queryset(self):
+        session_pk = self.kwargs.get('session_pk', None)
+        if session_pk is not None:
+            return Rating.objects.filter(session__pk=session_pk)
+        return []
 
 class RatingDetail(generics.RetrieveUpdateDestroyAPIView):
     model = Rating

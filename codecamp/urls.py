@@ -7,6 +7,6 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^sessions', include('codecamp.ember.urls', namespace='session')),
+    url(r'^codecamp', include('codecamp.ember.urls', namespace='codecamp')),
     url(r'^$', HomeView.as_view()),
 )
