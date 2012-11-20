@@ -1,11 +1,19 @@
 import json
 from django.test import TestCase
-from codecamp.ember.models import Session, Speaker, Rating
+from codecamp.ember.models import Session, Speaker, Rating, Tag
 
 
 def add_sessions_ratings_and_speakers():
+    first_tag = Tag(description='javascript')
+    last_tag = Tag(description='ember-js')
+    first_tag.save()
+    last_tag.save()
     first_session = Session(name='first', room='A', desc='javascript')
     last_session = Session(name='last', room='Z', desc='python')
+    first_session.save()
+    last_session.save()
+    first_session.tags.add(first_tag)
+    last_session.tags.add(last_tag)
     first_session.save()
     last_session.save()
     first_rating = Rating(score=9, feedback='legit', session=first_session)
@@ -16,13 +24,13 @@ def add_sessions_ratings_and_speakers():
     last_speaker = Speaker(name='bar', session=last_session)
     first_speaker.save()
     last_speaker.save()
-    return first_session, last_session, first_rating, last_rating, first_speaker, last_speaker
+    return first_session, last_session, first_rating, last_rating, first_speaker, last_speaker, first_tag, last_tag
 
 
 class SessionTests(TestCase):
 
     def setUp(self):
-        self.first_session, self.last_session, self.first_rating, self.last_rating, self.first_speaker, self.last_speaker = add_sessions_ratings_and_speakers()
+        self.first_session, self.last_session, self.first_rating, self.last_rating, self.first_speaker, self.last_speaker, self.first_tag, self.last_tag = add_sessions_ratings_and_speakers()
 
     def test_will_return_json_with_list_of_sessions(self):
         response = self.client.get('/codecamp/sessions')
@@ -59,7 +67,7 @@ class SessionTests(TestCase):
 class RatingTests(TestCase):
 
     def setUp(self):
-        self.first_session, self.last_session, self.first_rating, self.last_rating, self.first_speaker, self.last_speaker = add_sessions_ratings_and_speakers()
+        self.first_session, self.last_session, self.first_rating, self.last_rating, self.first_speaker, self.last_speaker, self.first_tag, self.last_tag = add_sessions_ratings_and_speakers()
 
     def test_will_return_json_with_list_of_ratings_for_given_session_id(self):
         response = self.client.get('/codecamp/sessions/{}/ratings/'.format(self.first_session.pk))
@@ -92,7 +100,7 @@ class RatingTests(TestCase):
 class SpeakerTests(TestCase):
 
     def setUp(self):
-        self.first_session, self.last_session, self.first_rating, self.last_rating, self.first_speaker, self.last_speaker = add_sessions_ratings_and_speakers()
+        self.first_session, self.last_session, self.first_rating, self.last_rating, self.first_speaker, self.last_speaker, self.first_tag, self.last_tag = add_sessions_ratings_and_speakers()
 
     def test_will_return_json_with_list_of_speakers_for_given_session_id(self):
         response = self.client.get('/codecamp/sessions/{}/speakers/'.format(self.first_session.pk))
@@ -116,3 +124,30 @@ class SpeakerTests(TestCase):
         response = self.client.get('/codecamp/speakers/{}/'.format(self.first_speaker.pk))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.content, '{"id": 1, "name": "foo", "session": 1}')
+
+
+class TagTests(TestCase):
+
+    def setUp(self):
+        self.first_session, self.last_session, self.first_rating, self.last_rating, self.first_speaker, self.last_speaker, self.first_tag, self.last_tag = add_sessions_ratings_and_speakers()
+
+    def test_will_return_json_with_list_of_tags_for_given_session_id(self):
+        response = self.client.get('/codecamp/sessions/{}/tags/'.format(self.first_session.pk))
+        tags = json.loads(response.content)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(tags), 1)
+
+    def test_tags_json_returns_first_tag_json_given_first_session_id(self):
+        response = self.client.get('/codecamp/sessions/{}/tags/'.format(self.first_session.pk))
+        speakers = json.loads(response.content)
+        self.assertEqual(speakers[0]['description'], 'javascript')
+
+    def test_tags_json_returns_last_tag_json_given_last_session_id(self):
+        response = self.client.get('/codecamp/sessions/{}/tags/'.format(self.last_session.pk))
+        speakers = json.loads(response.content)
+        self.assertEqual(speakers[0]['description'], 'ember-js')
+
+    def test_detail_tags_endpoint_returns_attributes_for_given_tag_id(self):
+        response = self.client.get('/codecamp/tags/{}/'.format(self.first_tag.pk))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.content, '{"id": 1, "description": "javascript"}')

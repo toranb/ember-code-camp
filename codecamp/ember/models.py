@@ -1,11 +1,15 @@
 from django.db import models
 
+class Tag(models.Model):
+    description = models.CharField(max_length=200)
+
 class Session(models.Model):
     name = models.CharField(max_length=150)
     room = models.CharField(max_length=100)
     start = models.DateTimeField(auto_now_add=True)
     end = models.DateTimeField(auto_now_add=True)
     desc = models.TextField()
+    tags = models.ManyToManyField(Tag)
 
 class Speaker(models.Model):
     name = models.CharField(max_length=100)

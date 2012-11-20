@@ -17,6 +17,9 @@
     {{speaker.name}}<br />
     <a {{action showSessionDetails session href=true}}>View Session Details</a><br />
   {{/each}}
+  {{#each tag in session.tags}}
+    {{tag.description}}<br />
+  {{/each}}
 {{/each}}
 </script>
 

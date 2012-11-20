@@ -6,10 +6,19 @@ CodeCamp.ApplicationView = Ember.View.extend({
   templateName: 'application'
 });
 
+CodeCamp.Tag = DS.Model.extend({
+  description: DS.attr('string')
+});
+
+CodeCamp.Tag.reopenClass({
+  url: 'codecamp/sessions/%@/tags/'
+});
+
 CodeCamp.Session = DS.Model.extend({
   name: DS.attr('string'),
   speakers: DS.hasMany('CodeCamp.Speaker'),
-  ratings: DS.hasMany('CodeCamp.Rating')
+  ratings: DS.hasMany('CodeCamp.Rating'),
+  tags: DS.hasMany('CodeCamp.Tag')
 });
 
 CodeCamp.Session.reopenClass({
