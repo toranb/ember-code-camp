@@ -1,5 +1,5 @@
 from django.views.generic import TemplateView
-from codecamp.ember import resources
+from codecamp.ember import serializers
 from rest_framework import generics
 from codecamp.ember.models import Session, Speaker, Rating, Tag
 
@@ -8,15 +8,15 @@ class HomeView(TemplateView):
 
 class SessionList(generics.ListCreateAPIView):
     model = Session
-    serializer_class = resources.SessionSerializer
+    serializer_class = serializers.SessionSerializer
 
 class SessionDetail(generics.RetrieveUpdateDestroyAPIView):
     model = Session
-    serializer_class = resources.SessionSerializer
+    serializer_class = serializers.SessionSerializer
 
 class TagList(generics.ListCreateAPIView):
     model = Tag
-    serializer_class = resources.TagSerializer
+    serializer_class = serializers.TagSerializer
 
     def get_queryset(self):
         session_pk = self.kwargs.get('session_pk', None)
@@ -26,11 +26,11 @@ class TagList(generics.ListCreateAPIView):
 
 class TagDetail(generics.RetrieveUpdateDestroyAPIView):
     model = Tag
-    serializer_class = resources.TagSerializer
+    serializer_class = serializers.TagSerializer
 
 class SpeakerList(generics.ListCreateAPIView):
     model = Speaker
-    serializer_class = resources.SpeakerSerializer
+    serializer_class = serializers.SpeakerSerializer
 
     def get_queryset(self):
         session_pk = self.kwargs.get('session_pk', None)
@@ -40,11 +40,11 @@ class SpeakerList(generics.ListCreateAPIView):
 
 class SpeakerDetail(generics.RetrieveUpdateDestroyAPIView):
     model = Speaker
-    serializer_class = resources.SpeakerSerializer
+    serializer_class = serializers.SpeakerSerializer
 
 class RatingList(generics.ListCreateAPIView):
     model = Rating
-    serializer_class = resources.RatingSerializer
+    serializer_class = serializers.RatingSerializer
 
     def get_queryset(self):
         session_pk = self.kwargs.get('session_pk', None)
@@ -54,4 +54,4 @@ class RatingList(generics.ListCreateAPIView):
 
 class RatingDetail(generics.RetrieveUpdateDestroyAPIView):
     model = Rating
-    serializer_class = resources.RatingSerializer
+    serializer_class = serializers.RatingSerializer
