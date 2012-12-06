@@ -10,6 +10,10 @@ class SessionList(generics.ListCreateAPIView):
     model = Session
     serializer_class = resources.SessionSerializer
 
+class SessionDetail(generics.RetrieveUpdateDestroyAPIView):
+    model = Session
+    serializer_class = resources.SessionSerializer
+
 class TagList(generics.ListCreateAPIView):
     model = Tag
     serializer_class = resources.TagSerializer

@@ -1,4 +1,4 @@
-from codecamp.ember.views import SessionList, SpeakerList, SpeakerDetail, RatingList, RatingDetail, TagList, TagDetail
+from codecamp.ember.views import SessionList, SessionDetail, SpeakerList, SpeakerDetail, RatingList, RatingDetail, TagList, TagDetail
 from django.views.decorators.csrf import csrf_exempt
 from django.conf.urls.defaults import patterns, url, include
 
@@ -9,5 +9,6 @@ urlpatterns = patterns('',
     url(r'^/sessions/(?P<session_pk>\d+)/tags/$', csrf_exempt(TagList.as_view())),
     url(r'^/sessions/(?P<session_pk>\d+)/ratings/$', csrf_exempt(RatingList.as_view())),
     url(r'^/sessions/(?P<session_pk>\d+)/speakers/$', csrf_exempt(SpeakerList.as_view())),
+    url(r'^/sessions/(?P<pk>\d+)/$', csrf_exempt(SessionDetail.as_view())),
     url(r'^/sessions$', csrf_exempt(SessionList.as_view())),
 )
