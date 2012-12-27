@@ -45,7 +45,7 @@ CodeCamp.Rating.reopenClass({
 });
 
 CodeCamp.Store = DS.Store.extend({
-  revision: 7,
+  revision: 10,
   adapter: DS.DjangoRESTAdapter.create({
     bulkCommit: false
   })
