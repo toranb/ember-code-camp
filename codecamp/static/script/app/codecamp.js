@@ -1,17 +1,7 @@
 CodeCamp = Ember.Application.create();
-
 CodeCamp.ApplicationController = Ember.ObjectController.extend();
-
 CodeCamp.ApplicationView = Ember.View.extend({
   templateName: 'application'
-});
-
-CodeCamp.Tag = DS.Model.extend({
-  description: DS.attr('string')
-});
-
-CodeCamp.Tag.reopenClass({
-  url: 'codecamp/sessions/%@/tags/'
 });
 
 CodeCamp.Session = DS.Model.extend({
@@ -21,16 +11,10 @@ CodeCamp.Session = DS.Model.extend({
   tags: DS.hasMany('CodeCamp.Tag')
 });
 
-CodeCamp.Session.reopenClass({
-  url: 'codecamp/session'
-});
-
 CodeCamp.Speaker = DS.Model.extend({
   name: DS.attr('string'),
   session: DS.belongsTo('CodeCamp.Session')
-});
-
-CodeCamp.Speaker.reopenClass({
+}).reopenClass({
   url: 'codecamp/sessions/%@/speakers/'
 });
 
@@ -38,19 +22,19 @@ CodeCamp.Rating = DS.Model.extend({
   score: DS.attr('number'),
   feedback: DS.attr('string'),
   session: DS.belongsTo('CodeCamp.Session')
+}).reopenClass({
+  url: 'codecamp/sessions/%@/ratings/'
 });
 
-CodeCamp.Rating.reopenClass({
-  url: 'codecamp/sessions/%@/ratings/'
+CodeCamp.Tag = DS.Model.extend({
+  description: DS.attr('string')
+}).reopenClass({
+  url: 'codecamp/sessions/%@/tags/'
 });
 
 CodeCamp.Store = DS.Store.extend({
   revision: 10,
   adapter: DS.DjangoRESTAdapter.create()
-});
-
-CodeCamp.SessionsView = Ember.View.extend({
-  templateName: 'sessions'
 });
 
 CodeCamp.SessionsController = Ember.ArrayController.extend({
@@ -95,15 +79,6 @@ CodeCamp.SessionController = Ember.ObjectController.extend({
     this.content.get('ratings').pushObject(rating);
     CodeCamp.Session.all().get('store').commit();
   }
-
-});
-
-CodeCamp.SpeakerView = Ember.View.extend({
-  templateName: 'speaker'
-});
-
-CodeCamp.SpeakerController = Ember.ObjectController.extend({
-  content: null
 });
 
 CodeCamp.Router.map(function(match) {
@@ -115,18 +90,6 @@ CodeCamp.Router.map(function(match) {
 CodeCamp.SessionsRoute = Ember.Route.extend({
     setupControllers: function(controller) {
         controller.set('content', CodeCamp.Session.find());
-    }
-});
-
-CodeCamp.SessionRoute = Ember.Route.extend({
-    setupControllers: function(controller, session) {
-        controller.set('content', session);
-    }
-});
-
-CodeCamp.SpeakerRoute = Ember.Route.extend({
-    setupControllers: function(controller, speaker) {
-        controller.set('content', speaker);
     }
 });
 
