@@ -46,9 +46,7 @@ CodeCamp.Rating.reopenClass({
 
 CodeCamp.Store = DS.Store.extend({
   revision: 10,
-  adapter: DS.DjangoRESTAdapter.create({
-    bulkCommit: false
-  })
+  adapter: DS.DjangoRESTAdapter.create()
 });
 
 CodeCamp.SessionsView = Ember.View.extend({
@@ -62,21 +60,42 @@ CodeCamp.SessionsController = Ember.ArrayController.extend({
 CodeCamp.SessionView = Ember.View.extend({
   templateName: 'session',
   addRating: function(event) {
-    var session = event.context;
+    if (this.validForm()) {
+      var rating = this.buildRatingFromInputs(event.context);
+      this.get('controller').addRating(rating);
+      this.resetForm();
+    }
+  },
+  buildRatingFromInputs: function(session) {
+      var score = this.get('score');
+      var feedback = this.get('feedback');
+      return CodeCamp.Rating.createRecord(
+      { score: score,
+        feedback: feedback, 
+        session: session 
+      });
+  },
+  validForm: function() {
     var score = this.get('score');
     var feedback = this.get('feedback');
-
-    var rating = CodeCamp.Rating.createRecord({ score: score, feedback: feedback, session: session });
-    this.get('controller.content').get('ratings').pushObject(rating);
-    this.get('controller.target').get('store').commit();
-
+    if (score === "" || feedback === "") {
+      return false;
+    }
+    return true;
+  },
+  resetForm: function() {
     this.set('score', '');
     this.set('feedback', '');
   }
 });
 
 CodeCamp.SessionController = Ember.ObjectController.extend({
-  content: null
+  content: null,
+  addRating: function(rating) {
+    this.content.get('ratings').pushObject(rating);
+    CodeCamp.Session.all().get('store').commit();
+  }
+
 });
 
 CodeCamp.SpeakerView = Ember.View.extend({
@@ -87,44 +106,37 @@ CodeCamp.SpeakerController = Ember.ObjectController.extend({
   content: null
 });
 
-CodeCamp.Router = Ember.Router.extend({
-  root: Ember.Route.extend({
-    index: Ember.Route.extend({
-      route: '/',
-      showSessionDetails: Ember.Route.transitionTo('sessionDetails'),
-      showSpeakerDetails: Ember.Route.transitionTo('speakerDetails'),
-      connectOutlets: function(router, context) {
-        router.get('applicationController').connectOutlet('sessions', router.get('store').findAll(CodeCamp.Session));
-      },
-      index: Ember.Route.extend({
-        route: '/'
-      }),
-      sessionDetails: Ember.Route.extend({
-        route: '/session/:session_id',
-        connectOutlets: function(router, session) {
-          router.get('applicationController').connectOutlet('session', session);
-        },
-        serialize: function(router, session) {
-          return { 'session_id': session.get('id') }
-        },
-        deserialize: function(router, params) {
-          return CodeCamp.Session.find(params['session_id']);
-        }
-      }),
-      speakerDetails: Ember.Route.extend({
-        route: '/speaker/:speaker_id',
-        connectOutlets: function(router, speaker) {
-          router.get('applicationController').connectOutlet('speaker', speaker);
-        },
-        serialize: function(router, speaker) {
-          return { 'speaker_id': speaker.get('id') }
-        },
-        deserialize: function(router, params) {
-          return CodeCamp.Speaker.find(params['speaker_id']);
-        }
-      })
-    })
-  })
+CodeCamp.Router.map(function(match) {
+    match("/").to("sessions");
+    match("/session/:session_id").to("session");
+    match("/speaker/:speaker_id").to("speaker");
+});
+
+CodeCamp.SessionsRoute = Ember.Route.extend({
+    renderTemplates: function() {
+        this.render('sessions');
+    },
+    setupControllers: function(controller) {
+        controller.set('content', CodeCamp.Session.find());
+    }
+});
+
+CodeCamp.SessionRoute = Ember.Route.extend({
+    renderTemplates: function() {
+        this.render('session');
+    },
+    setupControllers: function(controller, session) {
+        controller.set('content', session);
+    }
+});
+
+CodeCamp.SpeakerRoute = Ember.Route.extend({
+    renderTemplates: function() {
+        this.render('speaker');
+    },
+    setupControllers: function(controller, speaker) {
+        controller.set('content', speaker);
+    }
 });
 
 CodeCamp.initialize();

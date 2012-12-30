@@ -13,9 +13,9 @@
 <script type="text/x-handlebars" data-template-name="sessions">
 {{#each session in controller}}
   {{session.name}}<br />
+  {{#linkTo 'session' session}}View Session Details{{/linkTo}}<br />
   {{#each speaker in session.speakers}}
     {{speaker.name}}<br />
-    <a {{action showSessionDetails session href=true}}>View Session Details</a><br />
   {{/each}}
   {{#each tag in session.tags}}
     {{tag.description}}<br />
@@ -26,7 +26,7 @@
 <script type="text/x-handlebars" data-template-name="session">
 {{content.name}}<br />
   {{#each speaker in content.speakers}}
-    <a {{action showSpeakerDetails speaker href=true}}>View Speaker Details</a><br />
+    {{#linkTo 'speaker' speaker}}View Speaker Details{{/linkTo}}<br />
   {{/each}}
   {{#each rating in content.ratings}}
     {{rating.score}}<br />
