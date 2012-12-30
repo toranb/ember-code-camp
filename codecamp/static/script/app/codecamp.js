@@ -113,27 +113,18 @@ CodeCamp.Router.map(function(match) {
 });
 
 CodeCamp.SessionsRoute = Ember.Route.extend({
-    renderTemplates: function() {
-        this.render('sessions');
-    },
     setupControllers: function(controller) {
         controller.set('content', CodeCamp.Session.find());
     }
 });
 
 CodeCamp.SessionRoute = Ember.Route.extend({
-    renderTemplates: function() {
-        this.render('session');
-    },
     setupControllers: function(controller, session) {
         controller.set('content', session);
     }
 });
 
 CodeCamp.SpeakerRoute = Ember.Route.extend({
-    renderTemplates: function() {
-        this.render('speaker');
-    },
     setupControllers: function(controller, speaker) {
         controller.set('content', speaker);
     }
