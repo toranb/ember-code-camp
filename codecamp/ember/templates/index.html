@@ -13,20 +13,22 @@
 <script type="text/x-handlebars" data-template-name="sessions">
 {{#each session in controller}}
   {{session.name}}<br />
-  {{#linkTo 'session' session}}View Session Details{{/linkTo}}<br />
   {{#each speaker in session.speakers}}
     {{speaker.name}}<br />
   {{/each}}
   {{#each tag in session.tags}}
     {{tag.description}}<br />
   {{/each}}
+
+  {{#linkTo 'session' session}}View Session Details{{/linkTo}}<br /><br />
 {{/each}}
 </script>
 
 <script type="text/x-handlebars" data-template-name="session">
 {{content.name}}<br />
   {{#each speaker in content.speakers}}
-    {{#linkTo 'speaker' speaker}}View Speaker Details{{/linkTo}}<br />
+    {{speaker.name}}<br />
+    {{#linkTo 'speaker' speaker}}View Speaker Details{{/linkTo}}<br /><br />
   {{/each}}
   {{#each rating in content.ratings}}
     {{rating.score}}<br />
