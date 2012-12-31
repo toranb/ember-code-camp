@@ -44,25 +44,25 @@ CodeCamp.SessionsController = Ember.ArrayController.extend({
 CodeCamp.SessionView = Ember.View.extend({
   templateName: 'session',
   addRating: function(event) {
-    if (this.validForm()) {
+    if (this.formIsValid()) {
       var rating = this.buildRatingFromInputs(event.context);
       this.get('controller').addRating(rating);
       this.resetForm();
     }
   },
   buildRatingFromInputs: function(session) {
-      var score = this.get('score');
-      var feedback = this.get('feedback');
-      return CodeCamp.Rating.createRecord(
-      { score: score,
-        feedback: feedback, 
-        session: session 
-      });
-  },
-  validForm: function() {
     var score = this.get('score');
     var feedback = this.get('feedback');
-    if (score === "" || feedback === "") {
+    return CodeCamp.Rating.createRecord(
+    { score: score,
+      feedback: feedback,
+      session: session
+    });
+  },
+  formIsValid: function() {
+    var score = this.get('score');
+    var feedback = this.get('feedback');
+    if (score === undefined || feedback === undefined || score.trim() === "" || feedback.trim() === "") {
       return false;
     }
     return true;
@@ -77,20 +77,20 @@ CodeCamp.SessionController = Ember.ObjectController.extend({
   content: null,
   addRating: function(rating) {
     this.content.get('ratings').pushObject(rating);
-    CodeCamp.Session.all().get('store').commit();
+    this.get('store').commit();
   }
 });
 
 CodeCamp.Router.map(function(match) {
-    match("/").to("sessions");
-    match("/session/:session_id").to("session");
-    match("/speaker/:speaker_id").to("speaker");
+  match("/").to("sessions");
+  match("/session/:session_id").to("session");
+  match("/speaker/:speaker_id").to("speaker");
 });
 
 CodeCamp.SessionsRoute = Ember.Route.extend({
-    setupControllers: function(controller) {
-        controller.set('content', CodeCamp.Session.find());
-    }
+  setupControllers: function(controller) {
+    controller.set('content', CodeCamp.Session.find());
+  }
 });
 
 CodeCamp.initialize();

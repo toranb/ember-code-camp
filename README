@@ -17,3 +17,8 @@ https://github.com/toranb/ember-code-camp/blob/master/codecamp/static/script/app
 https://github.com/toranb/ember-code-camp/blob/master/codecamp/ember/templates/index.html
 
 - This above contains the handlebars template
+
+To run the jasmine unit tests
+
+1.) npm install
+2.) node node_modules/jasmine-phantom-node/bin/jasmine-phantom-node codecamp/static/script/tests
