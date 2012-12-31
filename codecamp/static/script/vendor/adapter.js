@@ -38,7 +38,6 @@
             , url = type.url.fmt(parent.get('id'));
 
             this.ajax(url, "GET", {
-                data: {ids: ids},
                 success: function(pre_json) {
                     json[plural] = pre_json;
                     Ember.run(this, function(){
