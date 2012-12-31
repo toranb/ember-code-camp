@@ -4802,6 +4802,7 @@ Ember.onLoad('Ember.Application', function(Application) {
 
       initialize: function(container, application) {
         container.register('store', 'main', application.Store);
+        container.lookup('store:main');
       }
     });
 
