@@ -1,8 +1,4 @@
 CodeCamp = Ember.Application.create();
-CodeCamp.ApplicationController = Ember.ObjectController.extend();
-CodeCamp.ApplicationView = Ember.View.extend({
-  templateName: 'application'
-});
 
 CodeCamp.Session = DS.Model.extend({
   name: DS.attr('string'),
@@ -92,5 +88,3 @@ CodeCamp.SessionsRoute = Ember.Route.extend({
     controller.set('content', CodeCamp.Session.find());
   }
 });
-
-CodeCamp.initialize();
