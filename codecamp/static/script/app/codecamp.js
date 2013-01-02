@@ -10,27 +10,23 @@ CodeCamp.Session = DS.Model.extend({
 CodeCamp.Speaker = DS.Model.extend({
   name: DS.attr('string'),
   session: DS.belongsTo('CodeCamp.Session')
-}).reopenClass({
-  url: 'codecamp/sessions/%@/speakers/'
 });
 
 CodeCamp.Rating = DS.Model.extend({
   score: DS.attr('number'),
   feedback: DS.attr('string'),
   session: DS.belongsTo('CodeCamp.Session')
-}).reopenClass({
-  url: 'codecamp/sessions/%@/ratings/'
 });
 
 CodeCamp.Tag = DS.Model.extend({
   description: DS.attr('string')
-}).reopenClass({
-  url: 'codecamp/sessions/%@/tags/'
 });
 
 CodeCamp.Store = DS.Store.extend({
   revision: 10,
-  adapter: DS.DjangoRESTAdapter.create()
+  adapter: DS.DjangoRESTAdapter.create({
+      namespace: 'codecamp'
+  })
 });
 
 CodeCamp.SessionsController = Ember.ArrayController.extend({

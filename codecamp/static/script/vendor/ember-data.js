@@ -6705,7 +6705,7 @@ DS.RESTAdapter = DS.Adapter.extend({
       url.push(suffix);
     }
 
-    return url.join("/codecamp/");
+    return url.join("/");
   },
 
   meta: 'meta',
