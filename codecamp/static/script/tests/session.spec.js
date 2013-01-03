@@ -121,12 +121,6 @@ describe ("CodeCamp.SessionController Tests", function(){
     rating = CodeCamp.Rating.createRecord();
   });
 
-  it ("will add the rating to the controllers session object", function(){
-      expect(sut.content.get('ratings').get('length')).toEqual(0);
-      sut.addRating(rating);
-      expect(sut.content.get('ratings').get('length')).toEqual(1);
-  });
-
   it ("will invoke commit on the store", function(){
     var commitSpy = spyOn(store, 'commit')
     sut.addRating(rating);

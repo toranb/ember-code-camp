@@ -68,7 +68,6 @@ CodeCamp.SessionView = Ember.View.extend({
 CodeCamp.SessionController = Ember.ObjectController.extend({
   content: null,
   addRating: function(rating) {
-    this.content.get('ratings').pushObject(rating);
     this.get('store').commit();
   }
 });
