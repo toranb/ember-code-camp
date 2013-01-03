@@ -23,7 +23,7 @@ CodeCamp.Tag = DS.Model.extend({
 });
 
 CodeCamp.Store = DS.Store.extend({
-  revision: 10,
+  revision: 11,
   adapter: DS.DjangoRESTAdapter.create({
       namespace: 'codecamp'
   })
