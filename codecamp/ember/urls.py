@@ -10,5 +10,5 @@ urlpatterns = patterns('',
     url(r'^/sessions/(?P<session_pk>\d+)/ratings/$', csrf_exempt(RatingList.as_view())),
     url(r'^/sessions/(?P<session_pk>\d+)/speakers/$', csrf_exempt(SpeakerList.as_view())),
     url(r'^/sessions/(?P<pk>\d+)/$', csrf_exempt(SessionDetail.as_view())),
-    url(r'^/sessions$', csrf_exempt(SessionList.as_view())),
+    url(r'^/sessions/$', csrf_exempt(SessionList.as_view())),
 )
