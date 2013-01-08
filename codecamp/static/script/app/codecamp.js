@@ -37,7 +37,7 @@ CodeCamp.SessionView = Ember.View.extend({
   templateName: 'session',
   addRating: function(event) {
     if (this.formIsValid()) {
-      var rating = this.buildRatingFromInputs(event.context);
+      var rating = this.buildRatingFromInputs(event);
       this.get('controller').addRating(rating);
       this.resetForm();
     }
@@ -85,7 +85,7 @@ CodeCamp.SessionRoute = Ember.Route.extend({
 });
 
 CodeCamp.SessionsRoute = Ember.Route.extend({
-  setupControllers: function(controller) {
+  setupController: function(controller) {
     controller.set('content', CodeCamp.Session.find());
   }
 });
