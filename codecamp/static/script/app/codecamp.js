@@ -78,6 +78,12 @@ CodeCamp.Router.map(function(match) {
   match("/speaker/:speaker_id").to("speaker");
 });
 
+CodeCamp.SessionRoute = Ember.Route.extend({
+  model: function(params) {
+      return CodeCamp.Session.find(params.session_id);
+  }
+});
+
 CodeCamp.SessionsRoute = Ember.Route.extend({
   setupControllers: function(controller) {
     controller.set('content', CodeCamp.Session.find());
