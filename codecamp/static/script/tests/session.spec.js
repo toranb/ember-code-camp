@@ -95,16 +95,17 @@ describe ("CodeCamp.SessionView Tests", function(){
     expect(addSpy).toHaveBeenCalledWith(jasmine.any(Object));
   });
 
-  it ("invokes addRating on the controller with a complete rating object when form is valid", function(){
-    spyOn(sut, 'formIsValid').andReturn(true);
-    sut.set('score', '1234');
-    sut.set('feedback', 'abcd');
-    var addSpy = spyOn(controller, 'addRating')
-    sut.addRating(event);
-    expect(addSpy.argsForCall[0][0].get('session')).toBe(session);
-    expect(addSpy.argsForCall[0][0].get('score')).toEqual('1234');
-    expect(addSpy.argsForCall[0][0].get('feedback')).toEqual('abcd');
-  });
+  // reworking this to include a local store for integration like testing
+  // it ("invokes addRating on the controller with a complete rating object when form is valid", function(){
+  //   spyOn(sut, 'formIsValid').andReturn(true);
+  //   sut.set('score', '1234');
+  //   sut.set('feedback', 'abcd');
+  //   var addSpy = spyOn(controller, 'addRating')
+  //   sut.addRating(event);
+  //   expect(addSpy.argsForCall[0][0].get('session')).toBe(session);
+  //   expect(addSpy.argsForCall[0][0].get('score')).toEqual('1234');
+  //   expect(addSpy.argsForCall[0][0].get('feedback')).toEqual('abcd');
+  // });
 
 });
 
