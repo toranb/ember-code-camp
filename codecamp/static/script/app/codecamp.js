@@ -73,9 +73,9 @@ CodeCamp.SessionController = Ember.ObjectController.extend({
 });
 
 CodeCamp.Router.map(function(match) {
-  match("/").to("sessions");
-  match("/session/:session_id").to("session");
-  match("/speaker/:speaker_id").to("speaker");
+  this.route("sessions", { path : "/" });
+  this.route("session", { path : "/session/:session_id" });
+  this.route("speaker", { path : "/speaker/:speaker_id" });
 });
 
 CodeCamp.SessionRoute = Ember.Route.extend({
