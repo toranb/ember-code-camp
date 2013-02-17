@@ -4,6 +4,7 @@ To run this django application
 
 1. pip install -r requirements.txt
 2. python manage.py runserver
+3. http://localhost:8000
 
 **Files of interest for anyone looking at the ember side of this project
 
