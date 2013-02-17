@@ -3,10 +3,7 @@ ember.js web app showing one to many data models in action using ember-data
 To run this django application
 
 1. pip install -r requirements.txt
-2. python manage.py syncdb
-3. python manage.py runserver
-4. http://localhost:8000/admin/
-5. add a few sessions and speakers
+2. python manage.py runserver
 
 **Files of interest for anyone looking at the ember side of this project
 
