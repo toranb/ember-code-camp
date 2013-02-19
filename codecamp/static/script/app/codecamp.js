@@ -72,7 +72,7 @@ CodeCamp.SessionController = Ember.ObjectController.extend({
   }
 });
 
-CodeCamp.Router.map(function(match) {
+CodeCamp.Router.map(function() {
   this.route("sessions", { path : "/" });
   this.route("session", { path : "/session/:session_id" });
   this.route("speaker", { path : "/speaker/:speaker_id" });
