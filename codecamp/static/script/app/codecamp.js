@@ -29,10 +29,6 @@ CodeCamp.Store = DS.Store.extend({
   })
 });
 
-CodeCamp.SessionsController = Ember.ArrayController.extend({
-  content: []
-});
-
 CodeCamp.SessionView = Ember.View.extend({
   templateName: 'session',
   addRating: function(event) {
@@ -66,7 +62,6 @@ CodeCamp.SessionView = Ember.View.extend({
 });
 
 CodeCamp.SessionController = Ember.ObjectController.extend({
-  content: null,
   addRating: function(rating) {
     this.get('store').commit();
   }
@@ -78,15 +73,9 @@ CodeCamp.Router.map(function() {
   this.route("speaker", { path : "/speaker/:speaker_id" });
 });
 
-CodeCamp.SessionRoute = Ember.Route.extend({
-  model: function(params) {
-      return CodeCamp.Session.find(params.session_id);
-  }
-});
-
 CodeCamp.SessionsRoute = Ember.Route.extend({
-  setupController: function(controller) {
-    controller.set('content', CodeCamp.Session.find());
+  model: function() {
+    return CodeCamp.Session.find();
   }
 });
 
