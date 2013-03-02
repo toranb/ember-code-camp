@@ -1,3 +1,2 @@
 Django
-django-templatetag-handlebars
-djangorestframework==2.1.14
+djangorestframework==2.2.1

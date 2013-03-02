@@ -74,7 +74,6 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'rest_framework',
     'codecamp.ember',
-    'templatetag_handlebars',
 )
 
 LOGGING = {
