@@ -79,7 +79,7 @@ CodeCamp.SessionsRoute = Ember.Route.extend({
   }
 });
 
-CodeCamp.initialize();
+//CodeCamp.initialize();
 
 //the above isn't needed for production code anymore, but my test code
 //won't work w/out it ... so I put this back in until I find a work around
