@@ -7,7 +7,7 @@ describe ("CodeCamp.SessionView Tests", function(){
 
   beforeEach(function(){
     store = DS.Store.create({
-      revision: 11,
+      revision: 12,
       adapter: DS.LSAdapter.create()
     });
     sut = CodeCamp.SessionView.create();
