@@ -46,6 +46,10 @@ class RatingList(generics.ListCreateAPIView):
     model = Rating
     serializer_class = serializers.RatingSerializer
 
+class RatingBySessionList(generics.ListCreateAPIView):
+    model = Rating
+    serializer_class = serializers.RatingSerializer
+
     def get_queryset(self):
         session_pk = self.kwargs.get('session_pk', None)
         if session_pk is not None:
